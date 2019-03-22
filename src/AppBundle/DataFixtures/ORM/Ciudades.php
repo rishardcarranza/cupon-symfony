@@ -7,33 +7,53 @@
  */
 
 namespace AppBundle\DataFixtures\ORM;
-
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Ciudad;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
-class Ciudades implements FixtureInterface
+
+class Ciudades extends AbstractFixture implements OrderedFixtureInterface
 {
-
-    /**
-     * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
-     */
+    public function getOrder()
+    {
+        return 10;
+    }
     public function load(ObjectManager $manager)
     {
-        // TODO: Implement load() method.
+        // Los 25 municipios más poblados de España según el INE
+        // fuente: http://es.wikipedia.org/wiki/Municipios_de_Espa%C3%B1a_por_poblaci%C3%B3n
         $ciudades = array(
-            array('nombre' => 'El Salvador', 'slug' => 'el-salvador'),
-            array('nombre' => 'Madrid', 'slug' => 'madrid'),
-            array('nombre' => 'Barcelona', 'slug' => 'barcelona'),
+            'Madrid',
+            'Barcelona',
+            'Valencia',
+            'Sevilla',
+            'Zaragoza',
+            'Málaga',
+            'Murcia',
+            'Palma de Mallorca',
+            'Las Palmas de Gran Canaria',
+            'Bilbao',
+            'Alicante',
+            'Córdoba',
+            'Valladolid',
+            'Vigo',
+            'Gijón',
+            'Hospitalet de Llobregat',
+            'La Coruña',
+            'Granada',
+            'Vitoria-Gasteiz',
+            'Elche',
+            'Oviedo',
+            'Santa Cruz de Tenerife',
+            'Badalona',
+            'Cartagena',
+            'Tarrasa',
         );
-
-        foreach ($ciudades as $ciudad) {
-            $entidad = new Ciudad();
-            $entidad->setNombre($ciudad['nombre']);
-            $entidad->setSlug($ciudad['slug']);
-            $manager->persist($entidad);
+        foreach ($ciudades as $nombre) {
+            $ciudad = new Ciudad();
+            $ciudad->setNombre($nombre);
+            $manager->persist($ciudad);
         }
         $manager->flush();
     }

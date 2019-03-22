@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\AppBundle;
+use AppBundle\Util\Slugger;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -92,6 +93,7 @@ class Tienda
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
+        $this->slug = Slugger::getSlug($nombre);
 
         return $this;
     }
